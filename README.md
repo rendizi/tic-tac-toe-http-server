@@ -16,7 +16,7 @@ curl -X POST \
   -H "ID: 123" \ # Replace "123" with the actual Game ID
   -H "Content-Type: application/json" \
   -d '{"x": "1", "y": "2", "isFirst": true}' \
-  http://localhost/game
+  http://127.0.0.1:3333/game
 ```
 
 At the end of the game, you can not create a new game and send a request to the same ID, the matrix will update itself

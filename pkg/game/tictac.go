@@ -3,7 +3,6 @@ package game
 import "errors"
 
 var uniqId = 0
-var isFirst = true
 
 type Net struct {
 	Id   int
@@ -15,6 +14,7 @@ func NewNet() (*Net, error) {
 	for i := range grid {
 		grid[i] = make([]string, 3)
 	}
+
 	uniqId++
 	return &Net{
 		Id:   uniqId,
@@ -22,16 +22,17 @@ func NewNet() (*Net, error) {
 	}, nil
 }
 
-func (n *Net) Set(x, y int) (bool, error) {
+func (n *Net) Set(x, y int, isFirst bool) (bool, error) {
 	if err := isValid(x, y); err != nil {
 		return false, err
 	}
+	if n.Grid[x][y] != "" {
+		return false, errors.New("Cell is occupied")
+	}
 	if isFirst {
 		n.Grid[x][y] = "X"
-		isFirst = false
 	} else {
 		n.Grid[x][y] = "O"
-		isFirst = true
 	}
 	return n.isWinner(), nil
 }

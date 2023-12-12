@@ -82,11 +82,7 @@ func Game(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
-	if isWinner {
-		fmt.Fprint(w, "________$$$$\n_______$$__$\n_______$___$$\n_______$___$$\n_______$$___$$\n________$____$$\n________$$____$$$\n_________$$_____$$\n_________$$______$$\n__________$_______$$\n____$$$$$$$________$$\n__$$$_______________$$$$$$\n_$$____$$$$____________$$$\n_$___$$$__$$$____________$$\n_$$________$$$____________$\n__$$____$$$$$$____________$\n__$$$$$$$____$$___________$\n__$$_______$$$$___________$\n___$$$$$$$$$__$$_________$$\n____$________$$$$_____$$$$\n____$$____$$$$$$____$$$$$$\n_____$$$$$$____$$__$$\n_______$_____$$$_$$$\n________$$$$$$$$$$")
-		fmt.Fprintln(w, "\nGame over!")
-		return
-	}
+
 	for i := 0; i < 3; i++ {
 		for j := 0; j < 3; j++ {
 			cell := Net.Grid[i][j]
@@ -104,5 +100,16 @@ func Game(w http.ResponseWriter, r *http.Request) {
 		if i != 2 {
 			fmt.Fprintf(w, "-+-+-\n")
 		}
+	}
+	if isWinner {
+		fmt.Fprintln(w, "\nGame over!")
+		Net, err = game.NewNet()
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+
+		Games[gameID] = Net
+		return
 	}
 }

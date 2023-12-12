@@ -1,4 +1,4 @@
-module github.com/aivanov/game
+module github.com/rendizi/tic-tac-toe-http-server
 
 go 1.21.4
 

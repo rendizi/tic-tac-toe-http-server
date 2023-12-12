@@ -26,8 +26,8 @@ func (n *Net) Set(x, y int, isFirst bool) (bool, error) {
 	if err := isValid(x, y); err != nil {
 		return false, err
 	}
-	if n.Grid[x][y] != "" {
-		return false, errors.New("Cell is occupied")
+	if n.Grid[x][y] != "" && n.Grid[x][y] != " " {
+		return false, errors.New("Cell is already occupied")
 	}
 	if isFirst {
 		n.Grid[x][y] = "X"
